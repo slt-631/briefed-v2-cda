@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes présentations{% endblock %}
+
+{% block body %}
+    <h1>Mes présentations</h1>
+
+ <a href="{{ path('app_presentation_new') }}">Nouvelle présentation</a>
+  <ul>
+{% for presentation in presentations %}
+    <li>
+        {{ presentation.title }}
+        — {{ presentation.createdAt|date('d/m/Y') }}
+
+        {% if presentation.imageFilename %}
+            <img src="{{ asset('uploads/' ~ presentation.imageFilename) }}" alt="{{ presentation.title }}" width="150">
+        {% endif %}
+
+        <a href="{{ path('app_presentation_edit', {id: presentation.id}) }}">Modifier</a>
+
+        <form method="post" action="{{ path('app_presentation_delete', {id: presentation.id}) }}" onsubmit="return confirm('Supprimer cette présentation ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ presentation.id) }}">
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+{% else %}
+    <li>Aucune présentation pour le moment.</li>
+{% endfor %}
+</ul>
+{% endblock %}

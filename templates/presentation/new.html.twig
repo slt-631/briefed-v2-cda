@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle présentation{% endblock %}
+
+{% block body %}
+    <h1>Nouvelle présentation</h1>
+
+    {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.title) }}
+        {{ form_row(form.backgroundColor) }}
+        {{ form_row(form.format) }}
+        {{ form_row(form.imageFile) }}
+
+        <button type="submit">Créer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_presentation_index') }}">Retour</a>
+{% endblock %}
