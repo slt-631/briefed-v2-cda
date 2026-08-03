@@ -52,6 +52,7 @@ class PresentationController extends AbstractController
 
         return $this->render('presentation/new.html.twig', [
             'form' => $form,
+            'presentation' => $presentation,
         ]);
     }
 

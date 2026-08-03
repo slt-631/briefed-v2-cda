@@ -5,20 +5,11 @@
 {% block body %}
     <h1>Modifier « {{ presentation.title }} »</h1>
 
-    {% if presentation.imageFilename %}
-        <p>Image actuelle : {{ presentation.imageFilename }}</p>
-    {% endif %}
-
-    {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
-        {{ form_errors(form) }}
-
-        {{ form_row(form.title) }}
-        {{ form_row(form.backgroundColor) }}
-        {{ form_row(form.format) }}
-        {{ form_row(form.imageFile) }}
-
-        <button type="submit">Enregistrer</button>
-    {{ form_end(form) }}
+    {% include 'partial/canvas.html.twig' with {
+        form: form,
+        presentation: presentation,
+        submit_label: 'Enregistrer'
+    } %}
 
     <a href="{{ path('app_presentation_index') }}">Retour</a>
 {% endblock %}

@@ -1,0 +1,28 @@
+<div
+    data-controller="presentation-editor"
+    data-presentation-editor-bg-value="{{ presentation.backgroundColor|default('#1a1a1a') }}"
+    data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
+    data-presentation-editor-format-value="{{ presentation.format|default('16:9') }}"
+>
+    {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.backgroundColor, {
+        attr: { 'data-presentation-editor-target': 'colorInput' }
+    }) }}
+    {{ form_row(form.format) }}
+    {{ form_row(form.imageFile, {
+        attr: { 'data-presentation-editor-target': 'imageInput' }
+    }) }}
+
+    <div class="presentation-preview">
+        <canvas
+            id="canvas"
+            data-presentation-editor-target="canvas"
+            width="800"
+            height="450"
+        ></canvas>
+    </div>
+    <button type="submit">{{ submit_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+</div>
