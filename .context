@@ -1,0 +1,52 @@
+# Contexte du projet — Briefed V2
+
+## Ce qu'est le projet
+Outil de présentation de designs inspiré de shots.so. L'utilisateur charge une
+image, la place dans un cadre avec un fond coloré, ajuste position/échelle/format,
+puis exporte en PNG.
+
+## Principe d'architecture central
+On ne stocke JAMAIS l'image aplatie/exportée. On stocke la "recette" :
+image source (nom de fichier), couleur de fond, format, position (posX/posY),
+échelle (scale). Le canvas rejoue cette recette. Ça permet la ré-édition.
+
+## Stack (ne rien ajouter d'autre)
+- Symfony 7.4 (socle back, contrôleurs, entités, sécurité)
+- Doctrine ORM + MariaDB
+- Twig pour les templates
+- JavaScript vanilla + API Canvas pour l'éditeur (PAS de framework front)
+- Pas de Docker, pas de bundle supplémentaire sans raison
+
+## État actuel
+- Auth complète (inscription, connexion, déconnexion, hash bcrypt)
+- Entité User + entité Presentation (relation ManyToOne : une présentation
+  appartient à un User)
+- CRUD complet des présentations avec :
+  - liste filtrée par utilisateur connecté (findByOwner)
+  - contrôle de propriété sur edit/delete (protection IDOR : 403 si pas owner)
+  - protection CSRF sur la suppression
+  - upload d'image sécurisé (FileUploader, nom slugifié + uniqid,
+    validation du type MIME réel)
+- Les images vont dans public/uploads/ (hors Git), la base ne stocke que le nom
+
+## En cours
+Semaine 3 : l'éditeur canvas. Parcours choisi = création directe (clic "Nouveau"
+crée une présentation vide avec valeurs par défaut et redirige vers l'éditeur,
+façon shots.so). L'éditeur gère création ET modification du visuel.
+
+## Conventions
+- Contrôle de propriété obligatoire sur toute action touchant une présentation
+- Jamais mettre owner/createdAt/posX/posY/scale dans un formulaire :
+  ces valeurs sont fixées côté serveur
+- Validation via attributs #[Assert\...] sur les entités
+- Messages en français
+
+## RÈGLE IMPORTANTE POUR L'ASSISTANT
+Je suis développeur JUNIOR en formation et je dois pouvoir EXPLIQUER et DÉFENDRE
+tout mon code (soutenance, IA non autorisée à l'examen).
+- N'écris PAS de code complet à ma place par défaut.
+- Explique-moi les concepts, indique-moi les fonctions/méthodes à utiliser et
+  la documentation à consulter (MDN pour le JS/Canvas, symfony.com/doc pour le back).
+- Laisse-moi écrire le code, puis corrige-le.
+- Si je bloque vraiment, donne un exemple minimal commenté, pas la solution entière.
+- Signale-moi les failles de sécurité et les pièges, toujours.

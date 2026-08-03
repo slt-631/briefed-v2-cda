@@ -53,6 +53,8 @@ class Presentation
     public function __construct()
 {
     $this->createdAt = new \DateTimeImmutable();
+    $this->title = "Ma presentation";
+    $this->backgroundColor = null;
     $this->posX = 0.0;
     $this->posY = 0.0;
     $this->scale = 1.0;

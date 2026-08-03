@@ -233,7 +233,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         resource?: scalar|Param|null,
  *         type?: scalar|Param|null,
  *         cache_dir?: scalar|Param|null, // Deprecated: Setting the "framework.router.cache_dir.cache_dir" configuration option is deprecated. It will be removed in version 8.0. // Default: "%kernel.build_dir%"
- *         default_uri?: scalar|Param|null, // The default URI used to generate URLs in a non-HTTP context. // Default: null
+ *         default_uri?: scalar|Param|null, // The default URI used to generate URLs in a non-HTTP .context. // Default: null
  *         http_port?: scalar|Param|null, // Default: 80
  *         https_port?: scalar|Param|null, // Default: 443
  *         strict_requirements?: scalar|Param|null, // set to true to throw an exception when a parameter does not match the requirements set to false to disable exceptions when a parameter does not match the requirements (and return null instead) set to null to disable parameter checks against requirements 'true' is the preferred configuration in development mode, while 'false' or 'null' might be preferred in production // Default: true
@@ -434,7 +434,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             default_serializer?: scalar|Param|null, // Service id to use as the default serializer for the transports. // Default: "messenger.transport.native_php_serializer"
  *             symfony_serializer?: array{
  *                 format?: scalar|Param|null, // Serialization format for the messenger.transport.symfony_serializer service (which is not the serializer used by default). // Default: "json"
- *                 context?: array<string, mixed>,
+ *                 .context?: array<string, mixed>,
  *             },
  *         },
  *         transports?: array<string, string|array{ // Default: []
@@ -485,7 +485,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             timeout?: float|Param, // The idle timeout, defaults to the "default_socket_timeout" ini parameter.
  *             max_duration?: float|Param, // The maximum execution time for the request+response as a whole.
  *             bindto?: scalar|Param|null, // A network interface name, IP address, a host name or a UNIX socket to bind to.
- *             verify_peer?: bool|Param, // Indicates if the peer should be verified in a TLS context.
+ *             verify_peer?: bool|Param, // Indicates if the peer should be verified in a TLS .context.
  *             verify_host?: bool|Param, // Indicates if the host should exist as a certificate common name.
  *             cafile?: scalar|Param|null, // A certificate authority file.
  *             capath?: scalar|Param|null, // A directory that contains multiple certificate authority files.
@@ -538,7 +538,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             timeout?: float|Param, // The idle timeout, defaults to the "default_socket_timeout" ini parameter.
  *             max_duration?: float|Param, // The maximum execution time for the request+response as a whole.
  *             bindto?: scalar|Param|null, // A network interface name, IP address, a host name or a UNIX socket to bind to.
- *             verify_peer?: bool|Param, // Indicates if the peer should be verified in a TLS context.
+ *             verify_peer?: bool|Param, // Indicates if the peer should be verified in a TLS .context.
  *             verify_host?: bool|Param, // Indicates if the host should exist as a certificate common name.
  *             cafile?: scalar|Param|null, // A certificate authority file.
  *             capath?: scalar|Param|null, // A directory that contains multiple certificate authority files.
@@ -1075,7 +1075,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         provider?: scalar|Param|null,
  *         stateless?: bool|Param, // Default: false
  *         lazy?: bool|Param, // Default: false
- *         context?: scalar|Param|null,
+ *         .context?: scalar|Param|null,
  *         logout?: array{
  *             enable_csrf?: bool|Param|null, // Default: null
  *             csrf_token_id?: scalar|Param|null, // Default: "logout"
