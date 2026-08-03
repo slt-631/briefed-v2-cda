@@ -1,24 +1,23 @@
 <div
-    data-controller="presentation-editor"
-    data-presentation-editor-bg-value="{{ presentation.backgroundColor|default('#1a1a1a') }}"
-    data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
-    data-presentation-editor-format-value="{{ presentation.format|default('16:9') }}"
+    class="presentation-editor"
+    data-bg="{{ presentation.backgroundColor|default('#1a1a1a') }}"
+    data-image-url="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
+    data-format="{{ presentation.format|default('16:9') }}"
 >
     {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
     {{ form_errors(form) }}
     {{ form_row(form.title) }}
     {{ form_row(form.backgroundColor, {
-        attr: { 'data-presentation-editor-target': 'colorInput' }
+        attr: { class: 'presentation-editor-color-input' }
     }) }}
     {{ form_row(form.format) }}
     {{ form_row(form.imageFile, {
-        attr: { 'data-presentation-editor-target': 'imageInput' }
+        attr: { class: 'presentation-editor-image-input' }
     }) }}
 
     <div class="presentation-preview">
         <canvas
-            id="canvas"
-            data-presentation-editor-target="canvas"
+            class="presentation-editor-canvas"
             width="800"
             height="450"
         ></canvas>
