@@ -55,8 +55,9 @@ class Presentation
     $this->createdAt = new \DateTimeImmutable();
     $this->title = "Ma presentation";
     $this->backgroundColor = null;
-    $this->posX = 0.0;
-    $this->posY = 0.0;
+    // Canvas 800×450, image de base 600×350 → centre = (100, 50)
+    $this->posX = 100.0;
+    $this->posY = 50.0;
     $this->scale = 1.0;
 }
 

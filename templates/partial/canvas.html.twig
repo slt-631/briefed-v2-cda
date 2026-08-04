@@ -1,23 +1,41 @@
 <div
-    class="presentation-editor"
-    data-bg="{{ presentation.backgroundColor|default('#1a1a1a') }}"
-    data-image-url="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
-    data-format="{{ presentation.format|default('16:9') }}"
+    data-controller="presentation-editor"
+    data-presentation-editor-bg-value="{{ presentation.backgroundColor|default('#1a1a1a') }}"
+    data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
+    data-presentation-editor-format-value="{{ presentation.format|default('16:9') }}"
 >
     {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
     {{ form_errors(form) }}
     {{ form_row(form.title) }}
     {{ form_row(form.backgroundColor, {
-        attr: { class: 'presentation-editor-color-input' }
+        attr: { 'data-presentation-editor-target': 'colorInput' }
     }) }}
-    {{ form_row(form.format) }}
+    {{ form_row(form.format, {
+        attr: { 'data-presentation-editor-target': 'formatInput'}
+    }) }}
     {{ form_row(form.imageFile, {
-        attr: { class: 'presentation-editor-image-input' }
+        attr: { 'data-presentation-editor-target': 'imageInput' }
     }) }}
+    {{ form_row(form.posX, {
+        attr: { 'data-presentation-editor-target': 'posXInput' }
+    }) }}
+    {{ form_row(form.posY, {
+        attr: { 'data-presentation-editor-target': 'posYInput' }
+    }) }}
+    {{ form_row(form.scale, {
+        attr: { 'data-presentation-editor-target': 'scaleInput' }
+    }) }}
+
+    <button
+        type="button"
+        data-presentation-editor-target="centerButton"
+    >
+        Centrer
+    </button>
 
     <div class="presentation-preview">
         <canvas
-            class="presentation-editor-canvas"
+            data-presentation-editor-target="canvas"
             width="800"
             height="450"
         ></canvas>

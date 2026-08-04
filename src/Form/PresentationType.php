@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+
 
 class PresentationType extends AbstractType
 {
@@ -38,11 +40,24 @@ class PresentationType extends AbstractType
                 'constraints' => [
                     new Image(
                         maxSize: '2M',
-                        maxSizeMessage: 'L\'image ne doit pas dépasser {{ limit }}.',
+                        maxSizeMessage: 'L\'image ne doit pas dépasser {{ maxSize }}.',
                         mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
                         mimeTypesMessage: 'Formats acceptés : JPEG, PNG, WebP.',
                     ),
                 ],
+            ])
+
+            ->add('posX', RangeType::class, [
+                'label' => 'Position X',
+                'attr' => ['min' => -800, 'max' => 800, 'step' => 1],
+            ])
+            ->add('posY', RangeType::class, [
+                'label' => 'Position Y',
+                'attr' => ['min' => -450, 'max' => 450, 'step' => 1],
+            ])
+            ->add('scale', RangeType::class, [
+                'label' => 'Échelle',
+                'attr' => ['min' => 0.1, 'max' => 5, 'step' => 0.1],
             ])
         ;
     }
