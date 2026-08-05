@@ -59,6 +59,10 @@ class Presentation
     private ?string $borderColor = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'Le radius doit être entre {{ min }} et {{ max }}.')]
+    private ?int $radius = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
@@ -70,6 +74,7 @@ class Presentation
     $this->posY = 50.0;
     $this->scale = 1.0;
     $this->border = 0;
+    $this->radius = 0;
 }
 
     public function getId(): ?int
@@ -193,6 +198,18 @@ class Presentation
     public function setBorderColor(string $borderColor): static
     {
         $this->borderColor = $borderColor;
+
+        return $this;
+    }
+
+    public function getRadius(): ?int
+    {
+        return $this->radius;
+    }
+
+    public function setRadius(int $radius): static
+    {
+        $this->radius = $radius;
 
         return $this;
     }

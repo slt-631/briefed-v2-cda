@@ -47,6 +47,9 @@
     {{ form_row(form.borderColor, {
         attr: { 'data-presentation-editor-target': 'borderColorInput' }
     }) }}
+    {{ form_row(form.radius, {
+        attr: { 'data-presentation-editor-target': 'radiusInput' }
+    }) }}
     <button type="submit">{{ submit_label|default('Enregistrer') }}</button>
     {{ form_end(form) }}
 </div>

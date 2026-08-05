@@ -12,6 +12,7 @@ export default class extends Controller {
         "formatInput",
         "borderInput",
         "borderColorInput",
+        "radiusInput",
     ];
     static values = { bg: String, imageUrl: String, format: String };
 
@@ -62,6 +63,10 @@ export default class extends Controller {
         });
 
         this.borderColorInputTarget.addEventListener("input", () => {
+            this.draw();
+        });
+
+        this.radiusInputTarget.addEventListener("input", () => {
             this.draw();
         });
 
@@ -140,14 +145,22 @@ export default class extends Controller {
             const x = Number(this.posXInputTarget.value);
             const y = Number(this.posYInputTarget.value);
             const { width, height } = this.getScaledSize();
+            const radius = Number(this.radiusInputTarget.value);
 
+            ctx.save();
+            ctx.beginPath();
+            ctx.roundRect(x, y, width, height, radius);
+            ctx.clip();
             ctx.drawImage(this.image, x, y, width, height);
+            ctx.restore();
 
             const borderWidth = Number(this.borderInputTarget.value);
             if (borderWidth > 0) {
                 ctx.strokeStyle = this.borderColorInputTarget.value;
                 ctx.lineWidth = borderWidth;
-                ctx.strokeRect(x, y, width, height);
+                ctx.beginPath();
+                ctx.roundRect(x, y, width, height, radius);
+                ctx.stroke();
             }
         }
     }

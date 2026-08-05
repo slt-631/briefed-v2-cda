@@ -66,6 +66,10 @@ class PresentationType extends AbstractType
             ->add('borderColor', ColorType::class, [
                 'label' => 'Couleur de bordure',
             ])
+            ->add('radius', RangeType::class, [
+                'label' => 'Radius',
+                'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
+            ])
         ;
     }
 
