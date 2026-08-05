@@ -25,6 +25,7 @@
     {{ form_row(form.scale, {
         attr: { 'data-presentation-editor-target': 'scaleInput' }
     }) }}
+     
 
     <button
         type="button"
@@ -40,6 +41,12 @@
             height="450"
         ></canvas>
     </div>
+     {{ form_row(form.border, { 
+    attr: { 'data-presentation-editor-target': 'borderInput' }
+     }) }}
+    {{ form_row(form.borderColor, {
+        attr: { 'data-presentation-editor-target': 'borderColorInput' }
+    }) }}
     <button type="submit">{{ submit_label|default('Enregistrer') }}</button>
     {{ form_end(form) }}
 </div>

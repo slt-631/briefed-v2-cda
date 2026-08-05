@@ -48,6 +48,17 @@ class Presentation
     private ?float $scale = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'La bordure doit être entre {{ min }} et {{ max }}.')]
+    private ?int $border = null;
+
+    #[ORM\Column(length: 7)]
+    #[Assert\Regex(
+       pattern: '/^#[0-9a-fA-F]{6}$/',
+       message: 'La couleur de la bordure doit être au format hexadécimal (ex: #1a1a1a).'
+     )]
+    private ?string $borderColor = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
@@ -55,10 +66,10 @@ class Presentation
     $this->createdAt = new \DateTimeImmutable();
     $this->title = "Ma presentation";
     $this->backgroundColor = null;
-    // Canvas 800×450, image de base 600×350 → centre = (100, 50)
     $this->posX = 100.0;
     $this->posY = 50.0;
     $this->scale = 1.0;
+    $this->border = 0;
 }
 
     public function getId(): ?int
@@ -158,6 +169,30 @@ class Presentation
     public function setScale(float $scale): static
     {
         $this->scale = $scale;
+
+        return $this;
+    }
+
+    public function getBorder(): ?int
+    {
+        return $this->border;
+    }
+
+    public function setBorder(int $border): static
+    {
+        $this->border = $border;
+
+        return $this;
+    }
+
+    public function getBorderColor(): ?string
+    {
+        return $this->borderColor;
+    }
+
+    public function setBorderColor(string $borderColor): static
+    {
+        $this->borderColor = $borderColor;
 
         return $this;
     }

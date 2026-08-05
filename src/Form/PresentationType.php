@@ -59,6 +59,13 @@ class PresentationType extends AbstractType
                 'label' => 'Échelle',
                 'attr' => ['min' => 0.1, 'max' => 5, 'step' => 0.1],
             ])
+            ->add('border', RangeType::class, [
+                'label' => 'Bordure',
+                'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
+            ])
+            ->add('borderColor', ColorType::class, [
+                'label' => 'Couleur de bordure',
+            ])
         ;
     }
 
