@@ -59,8 +59,25 @@ class Presentation
     private ?string $borderColor = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'L\'opacité de la bordure doit être entre {{ min }} et {{ max }}.')]
+    private ?int $borderOpacity = null;
+
+
+    #[ORM\Column]
     #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'Le radius doit être entre {{ min }} et {{ max }}.')]
     private ?int $radius = null;
+
+    #[ORM\Column(length: 10)]
+    #[Assert\Choice(choices: ['none', 'spread', 'hug'], message: 'Type d\'ombre non supporté.')]
+    private ?string $shadowType = null;
+
+    #[ORM\Column]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'L\'opacité de l\'ombre doit être entre {{ min }} et {{ max }}.')]
+    private ?int $shadowOpacity = null;
+
+    #[ORM\Column]
+    #[Assert\Range(min: 0, max: 360, notInRangeMessage: 'L\'angle de l\'ombre doit être entre {{ min }} et {{ max }}.')]
+    private ?float $shadowAngle = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -69,12 +86,18 @@ class Presentation
 {
     $this->createdAt = new \DateTimeImmutable();
     $this->title = "Ma presentation";
-    $this->backgroundColor = null;
+    $this->backgroundColor = '#1a1a1a';
+    $this->format = '16:9';
     $this->posX = 100.0;
     $this->posY = 50.0;
     $this->scale = 1.0;
     $this->border = 0;
+    $this->borderOpacity = 100;
+    $this->borderColor = '#000000';
     $this->radius = 0;
+    $this->shadowType = 'none';
+    $this->shadowOpacity = 40;
+    $this->shadowAngle = 135.0;
 }
 
     public function getId(): ?int
@@ -202,6 +225,18 @@ class Presentation
         return $this;
     }
 
+    public function getBorderOpacity(): ?int
+    {
+        return $this->borderOpacity;
+    }
+
+    public function setBorderOpacity(int $borderOpacity): static
+    {
+        $this->borderOpacity = $borderOpacity;
+
+        return $this;
+    }
+
     public function getRadius(): ?int
     {
         return $this->radius;
@@ -210,6 +245,42 @@ class Presentation
     public function setRadius(int $radius): static
     {
         $this->radius = $radius;
+
+        return $this;
+    }
+
+    public function getShadowType(): ?string
+    {
+        return $this->shadowType;
+    }
+
+    public function setShadowType(string $shadowType): static
+    {
+        $this->shadowType = $shadowType;
+
+        return $this;
+    }
+
+    public function getShadowOpacity(): ?int
+    {
+        return $this->shadowOpacity;
+    }
+
+    public function setShadowOpacity(int $shadowOpacity): static
+    {
+        $this->shadowOpacity = $shadowOpacity;
+
+        return $this;
+    }
+
+    public function getShadowAngle(): ?float
+    {
+        return $this->shadowAngle;
+    }
+
+    public function setShadowAngle(float $shadowAngle): static
+    {
+        $this->shadowAngle = $shadowAngle;
 
         return $this;
     }

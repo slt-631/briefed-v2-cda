@@ -66,9 +66,29 @@ class PresentationType extends AbstractType
             ->add('borderColor', ColorType::class, [
                 'label' => 'Couleur de bordure',
             ])
+            ->add('borderOpacity', RangeType::class, [
+                'label' => 'Opacité de la bordure',
+                'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
+            ])
             ->add('radius', RangeType::class, [
                 'label' => 'Radius',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
+            ])
+            ->add('shadowType', ChoiceType::class, [
+                'label' => 'Ombre',
+                'choices' => [
+                    'Aucune' => 'none',
+                    'Spread' => 'spread',
+                    'Hug' => 'hug',
+                ],
+            ])
+            ->add('shadowOpacity', RangeType::class, [
+                'label' => 'Opacité de l\'ombre',
+                'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
+            ])
+            ->add('shadowAngle', RangeType::class, [
+                'label' => 'Direction de l\'ombre',
+                'attr' => ['min' => 0, 'max' => 360, 'step' => 1],
             ])
         ;
     }
