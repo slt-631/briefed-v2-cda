@@ -25,8 +25,10 @@ class PresentationController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        $presentations = $repository->findByOwner($user);
+
         return $this->render('presentation/index.html.twig', [
-            'presentations' => $repository->findByOwner($user),
+            'presentations' => $presentations,
         ]);
     }
 
