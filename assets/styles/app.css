@@ -6,5 +6,6 @@
 @import "./components/_buttons.css";
 @import "./components/_forms.css";
 @import "./components/_range.css";
+@import "./components/cards.css";
 
 @import "./pages/_editor.css";

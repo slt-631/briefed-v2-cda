@@ -75,11 +75,16 @@ class PresentationType extends AbstractType
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowType', ChoiceType::class, [
-                'label' => 'Style d\'ombre',
+                'label' => false,
                 'choices' => [
-                    'Aucune' => 'none',
+                    'None' => 'none',
                     'Spread' => 'spread',
                     'Hug' => 'hug',
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'choice_attr' => fn () => [
+                    'data-presentation-editor-target' => 'shadowTypeInput',
                 ],
             ])
             ->add('shadowOpacity', RangeType::class, [
