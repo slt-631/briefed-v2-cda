@@ -5,10 +5,10 @@
     data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
     data-presentation-editor-format-value="{{ presentation.format|default('16:9') }}"
 >
-    {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
+    {{ form_start(form, { attr: { enctype: 'multipart/form-data', class: 'editor-form' } }) }}
     {{ form_errors(form) }}
 
-    <div>
+    <div class="sidebar">
         <div>
             {{ form_row(form.title) }}
         </div>
@@ -21,7 +21,7 @@
         </div>
 
         <div>
-            <h5>COULEUR DU CANVAS</h5>
+            <h5>COULEUR DE FOND</h5>
             {{ form_row(form.backgroundColor, {
                 attr: { 'data-presentation-editor-target': 'colorInput' }
             }) }}
@@ -163,8 +163,8 @@
         </div>
     </div>
 
-    <div>
-        <div>
+    <div class="canvas-image">
+        <div class="canva">
             <canvas
                 data-presentation-editor-target="canvas"
                 width="800"
@@ -172,10 +172,11 @@
             ></canvas>
         </div>
 
-        <div>
-            <button type="submit">{{ submit_label|default('Enregistrer') }}</button>
+        <div class="button-section">
+            <button type="submit" class="btn btn-primary">{{ submit_label|default('Enregistrer') }}</button>
             <button
                 type="button"
+                class="btn btn-secondary"
                 data-presentation-editor-target="exportButton"
             >
                 Exporter PNG

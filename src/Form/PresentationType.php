@@ -23,10 +23,10 @@ class PresentationType extends AbstractType
                 'label' => 'Titre',
             ])
             ->add('backgroundColor', ColorType::class, [
-                'label' => 'Couleur de fond',
+                'label' => false,
             ])
             ->add('format', ChoiceType::class, [
-                'label' => 'Format',
+                'label' => false,
                 'choices' => [
                     'Carré (1:1)' => '1:1',
                     'Paysage (16:9)' => '16:9',
@@ -34,7 +34,7 @@ class PresentationType extends AbstractType
                 ],
             ])
             ->add('imageFile', FileType::class, [
-                'label' => 'Image',
+                'label' => false,
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -75,7 +75,7 @@ class PresentationType extends AbstractType
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowType', ChoiceType::class, [
-                'label' => 'Ombre',
+                'label' => 'Style d\'ombre',
                 'choices' => [
                     'Aucune' => 'none',
                     'Spread' => 'spread',
