@@ -6,7 +6,7 @@
 
     --color-bg: #ffffff;
     --color-bg-app: #e1e2e4;
-    --color-bg-canvas: #e1e2e4;
+    --color-bg-canvas: #f9f9f9;
     --color-bg-input: #f3f4f6;
     --color-bg-hero: #928eb6;
 
@@ -17,6 +17,18 @@
     --color-text-inverse: #ffffff;
 
     --color-border: #e5e7eb;
+
+    --color-dropzone-bg: color-mix(in srgb, var(--color-primary) 8%, white);
+    --color-dropzone-border: color-mix(
+        in srgb,
+        var(--color-primary) 45%,
+        white
+    );
+    --color-dropzone-bg-hover: color-mix(
+        in srgb,
+        var(--color-primary) 14%,
+        white
+    );
 
     --font-size-xs: 0.6875rem;
     --font-size-sm: 0.875rem;

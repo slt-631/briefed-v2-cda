@@ -20,7 +20,7 @@ class PresentationType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre',
+                'label' => false,
             ])
             ->add('backgroundColor', ColorType::class, [
                 'label' => false,
@@ -67,11 +67,11 @@ class PresentationType extends AbstractType
                 'label' => 'Couleur de bordure',
             ])
             ->add('borderOpacity', RangeType::class, [
-                'label' => 'Opacité de la bordure',
+                'label' => 'Opacité',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('radius', RangeType::class, [
-                'label' => 'Radius',
+                'label' => 'Rayon',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowType', ChoiceType::class, [
@@ -88,11 +88,11 @@ class PresentationType extends AbstractType
                 ],
             ])
             ->add('shadowOpacity', RangeType::class, [
-                'label' => 'Opacité de l\'ombre',
+                'label' => 'Opacité',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowAngle', RangeType::class, [
-                'label' => 'Direction de l\'ombre',
+                'label' => 'Direction',
                 'attr' => ['min' => 0, 'max' => 360, 'step' => 1],
             ])
         ;

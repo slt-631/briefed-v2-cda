@@ -26,6 +26,8 @@ export default class extends Controller {
         "shadowOpacityNumberInput",
         "shadowAngleNumberInput",
         "exportButton",
+        "colorHexLabel",
+        "imagePreview",
     ];
     static values = { bg: String, imageUrl: String, format: String };
 
@@ -37,6 +39,7 @@ export default class extends Controller {
         };
 
         this.image = null;
+        this.previewObjectUrl = null;
 
         const initialFormat =
             this.formatValue || this.formatInputTarget.value || "16:9";
@@ -45,6 +48,7 @@ export default class extends Controller {
         this.draw();
 
         if (this.imageUrlValue) {
+            this.showImagePreview(this.imageUrlValue);
             this.loadImage(this.imageUrlValue, false);
         }
 
@@ -53,6 +57,7 @@ export default class extends Controller {
         this.posXNumberInputTarget.value = Number(this.posXInputTarget.value);
         this.posYNumberInputTarget.value = Number(this.posYInputTarget.value);
         this.scaleNumberInputTarget.value = Number(this.scaleInputTarget.value);
+
         this.borderNumberInputTarget.value = Number(
             this.borderInputTarget.value,
         );
@@ -70,6 +75,7 @@ export default class extends Controller {
         );
 
         this.colorInputTarget.addEventListener("input", (event) => {
+            this.colorHexLabelTarget.textContent = event.target.value;
             this.bgValue = event.target.value;
             this.draw();
         });
@@ -85,7 +91,9 @@ export default class extends Controller {
                 return;
             }
 
-            this.loadImage(URL.createObjectURL(file), true);
+            const objectUrl = URL.createObjectURL(file);
+            this.showImagePreview(objectUrl, true);
+            this.loadImage(objectUrl, true);
         });
 
         this.posXInputTarget.addEventListener("input", (event) => {
@@ -262,6 +270,24 @@ export default class extends Controller {
             }
         };
         img.src = url;
+    }
+
+    showImagePreview(url, isObjectUrl = false) {
+        if (!this.hasImagePreviewTarget) {
+            return;
+        }
+
+        if (this.previewObjectUrl) {
+            URL.revokeObjectURL(this.previewObjectUrl);
+            this.previewObjectUrl = null;
+        }
+
+        if (isObjectUrl) {
+            this.previewObjectUrl = url;
+        }
+
+        this.imagePreviewTarget.src = url;
+        this.imageInputTarget.closest(".image-field")?.classList.add("is-filled");
     }
 
     getScaledSize(scale = Number(this.scaleInputTarget.value)) {

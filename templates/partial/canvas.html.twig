@@ -10,6 +10,7 @@
 
     <div class="sidebar">
         <div>
+            <h5>TITRE DE LA PRÉSENATATION</h5>
             {{ form_row(form.title) }}
         </div>
 
@@ -21,112 +22,135 @@
         </div>
 
         <div>
-            <h5>COULEUR DE FOND</h5>
-            {{ form_row(form.backgroundColor, {
-                attr: { 'data-presentation-editor-target': 'colorInput' }
-            }) }}
-        </div>
+    <h5>COULEUR DE FOND</h5>
+    <label class="color-field">
+        {{ form_widget(form.backgroundColor, {
+            attr: { 'data-presentation-editor-target': 'colorInput' }
+        }) }}
+        <span class="color-field-hex" data-presentation-editor-target="colorHexLabel"> {{ presentation.backgroundColor }}</span>
+        <i class="fa-solid fa-eye-dropper"></i>
+    </label>
+</div>
 
         <div>
             <h5>IMAGE</h5>
-            {{ form_row(form.imageFile, {
-                attr: { 'data-presentation-editor-target': 'imageInput' }
-            }) }}
+            <label class="image-field{% if presentation.imageFilename is defined and presentation.imageFilename %} is-filled{% endif %}">
+                {{ form_widget(form.imageFile, {
+                    attr: { 'data-presentation-editor-target': 'imageInput' }
+                }) }}
+                <i class="fa-solid fa-plus"></i>
+                <p>Glisser une image</p>
+                <img
+                    class="image-field-preview"
+                    data-presentation-editor-target="imagePreview"
+                    alt="Aperçu de l'image"
+                    {% if presentation.imageFilename is defined and presentation.imageFilename %}
+                        src="{{ asset('uploads/' ~ presentation.imageFilename) }}"
+                    {% endif %}
+                >
+            </label>
         </div>
 
         <div>
             <h5>POSITION ET ÉCHELLE</h5>
-            {{ form_row(form.posX, {
-                attr: { 'data-presentation-editor-target': 'posXInput' }
-            }) }}
-            <label>
-                Valeur Position X (px)
+            <button
+                class="btn btn-primary"
+                type="button"
+                data-presentation-editor-target="centerButton"
+            >
+                Centrer
+            </button>
+            <div class="range-field">
+                {{ form_label(form.posX) }}
+                {{ form_widget(form.posX, {
+                    attr: { 'data-presentation-editor-target': 'posXInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="-800"
                     max="800"
                     step="1"
                     data-presentation-editor-target="posXNumberInput"
                 >
-            </label>
-            {{ form_row(form.posY, {
-                attr: { 'data-presentation-editor-target': 'posYInput' }
-            }) }}
-            <label>
-                Valeur Position Y (px)
+            </div>
+            <div class="range-field">
+                {{ form_label(form.posY) }}
+                {{ form_widget(form.posY, {
+                    attr: { 'data-presentation-editor-target': 'posYInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="-450"
                     max="450"
                     step="1"
                     data-presentation-editor-target="posYNumberInput"
                 >
-            </label>
-            {{ form_row(form.scale, {
-                attr: { 'data-presentation-editor-target': 'scaleInput' }
-            }) }}
-            <label>
-                Valeur Échelle (x)
+            </div>
+            <div class="range-field">
+                {{ form_label(form.scale) }}
+                {{ form_widget(form.scale, {
+                    attr: { 'data-presentation-editor-target': 'scaleInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="0.1"
                     max="5"
                     step="0.1"
                     data-presentation-editor-target="scaleNumberInput"
                 >
-            </label>
-            <button
-                type="button"
-                data-presentation-editor-target="centerButton"
-            >
-                Centrer
-            </button>
+            </div>
         </div>
 
         <div>
             <h5>STYLE ET EFFET</h5>
-            {{ form_row(form.border, {
-                attr: { 'data-presentation-editor-target': 'borderInput' }
-            }) }}
-            <label>
-                Valeur bordure (px)
+            <div class="range-field">
+                {{ form_label(form.border) }}
+                {{ form_widget(form.border, {
+                    attr: { 'data-presentation-editor-target': 'borderInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="0"
                     max="100"
                     step="1"
                     data-presentation-editor-target="borderNumberInput"
                 >
-            </label>
+            </div>
             {{ form_row(form.borderColor, {
                 attr: { 'data-presentation-editor-target': 'borderColorInput' }
             }) }}
-            {{ form_row(form.borderOpacity, {
-                attr: { 'data-presentation-editor-target': 'borderOpacityInput' }
-            }) }}
-            <label>
-                Valeur Opacité de la bordure (%)
+            <div class="range-field">
+                {{ form_label(form.borderOpacity) }}
+                {{ form_widget(form.borderOpacity, {
+                    attr: { 'data-presentation-editor-target': 'borderOpacityInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="0"
                     max="100"
                     step="1"
                     data-presentation-editor-target="borderOpacityNumberInput"
                 >
-            </label>
-            {{ form_row(form.radius, {
-                attr: { 'data-presentation-editor-target': 'radiusInput' }
-            }) }}
-            <label>
-                Valeur Radius (px)
+            </div>
+            <div class="range-field">
+                {{ form_label(form.radius) }}
+                {{ form_widget(form.radius, {
+                    attr: { 'data-presentation-editor-target': 'radiusInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="0"
                     max="100"
                     step="1"
                     data-presentation-editor-target="radiusNumberInput"
                 >
-            </label>
+            </div>
         </div>
 
         <div>
@@ -134,32 +158,34 @@
             {{ form_row(form.shadowType, {
                 attr : { class: 'choice-card' }
             }) }}
-            {{ form_row(form.shadowOpacity, {
-                attr: { 'data-presentation-editor-target': 'shadowOpacityInput' }
-            }) }}
-            <label>
-                Valeur Opacité de l'ombre (%)
+            <div class="range-field">
+                {{ form_label(form.shadowOpacity) }}
+                {{ form_widget(form.shadowOpacity, {
+                    attr: { 'data-presentation-editor-target': 'shadowOpacityInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="0"
                     max="100"
                     step="1"
                     data-presentation-editor-target="shadowOpacityNumberInput"
                 >
-            </label>
-            {{ form_row(form.shadowAngle, {
-                attr: { 'data-presentation-editor-target': 'shadowAngleInput' }
-            }) }}
-            <label>
-                Direction de l'ombre (°)
+            </div>
+            <div class="range-field">
+                {{ form_label(form.shadowAngle) }}
+                {{ form_widget(form.shadowAngle, {
+                    attr: { 'data-presentation-editor-target': 'shadowAngleInput' }
+                }) }}
                 <input
+                    class="range-field-value"
                     type="number"
                     min="0"
                     max="360"
                     step="1"
                     data-presentation-editor-target="shadowAngleNumberInput"
                 >
-            </label>
+            </div>
         </div>
     </div>
 
