@@ -287,7 +287,9 @@ export default class extends Controller {
         }
 
         this.imagePreviewTarget.src = url;
-        this.imageInputTarget.closest(".image-field")?.classList.add("is-filled");
+        this.imageInputTarget
+            .closest(".image-field")
+            ?.classList.add("is-filled");
     }
 
     getScaledSize(scale = Number(this.scaleInputTarget.value)) {

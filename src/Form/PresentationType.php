@@ -71,7 +71,7 @@ class PresentationType extends AbstractType
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('radius', RangeType::class, [
-                'label' => 'Rayon',
+                'label' => 'Radius',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowType', ChoiceType::class, [

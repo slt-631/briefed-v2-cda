@@ -137,3 +137,30 @@
     cursor: pointer;
     z-index: 1;
 }
+
+.border-color {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.border-color label {
+    flex: 0 1 auto;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--color-text-body);
+}
+
+.border-color input[type="color"] {
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: transparent;
+    margin-left: auto;
+}

@@ -53,13 +53,7 @@
 
         <div>
             <h5>POSITION ET ÉCHELLE</h5>
-            <button
-                class="btn btn-primary"
-                type="button"
-                data-presentation-editor-target="centerButton"
-            >
-                Centrer
-            </button>
+        
             <div class="range-field">
                 {{ form_label(form.posX) }}
                 {{ form_widget(form.posX, {
@@ -102,6 +96,13 @@
                     data-presentation-editor-target="scaleNumberInput"
                 >
             </div>
+               <button
+                class="btn btn-primary"
+                type="button"
+                data-presentation-editor-target="centerButton"
+            >
+                Centrer
+            </button>
         </div>
 
         <div>
@@ -120,9 +121,13 @@
                     data-presentation-editor-target="borderNumberInput"
                 >
             </div>
-            {{ form_row(form.borderColor, {
+            <div class="border-color">
+            {{ form_label(form.borderColor) }}
+            {{ form_widget(form.borderColor, {
                 attr: { 'data-presentation-editor-target': 'borderColorInput' }
             }) }}
+            </div>
+            
             <div class="range-field">
                 {{ form_label(form.borderOpacity) }}
                 {{ form_widget(form.borderOpacity, {
@@ -155,9 +160,19 @@
 
         <div>
             <h5>OMBRE</h5>
-            {{ form_row(form.shadowType, {
-                attr : { class: 'choice-card' }
-            }) }}
+            <div class="cards-choice">
+            {% for child in form.shadowType %}
+                <label class="card-choice">
+                {{ form_widget(child) }}
+                <img
+                    src="{{ asset('images/shadow/shadow-' ~ child.vars.value ~ '.png') }}"
+                    alt="{{ child.vars.label }}"
+                >
+                <span>{{ child.vars.label }}</span>
+            </label>
+            {% endfor %}
+            </div>
+           
             <div class="range-field">
                 {{ form_label(form.shadowOpacity) }}
                 {{ form_widget(form.shadowOpacity, {
@@ -190,6 +205,10 @@
     </div>
 
     <div class="canvas-image">
+        <div class="intro-presentation">
+           <a href="{{ path('app_presentation_index') }}" style="text-decoration: none; color: inherit;">Retour</a>
+            <h2 class="title-prez">{{ presentation.title }}</h2>
+        </div>
         <div class="canva">
             <canvas
                 data-presentation-editor-target="canvas"
