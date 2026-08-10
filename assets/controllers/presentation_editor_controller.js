@@ -42,7 +42,7 @@ export default class extends Controller {
         this.previewObjectUrl = null;
 
         const initialFormat =
-            this.formatValue || this.formatInputTarget.value || "16:9";
+            this.formatValue || this.formatInputTarget.value || "paysage";
         this.applyCanvasFormat(initialFormat);
 
         this.draw();
