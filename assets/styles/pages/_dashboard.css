@@ -1,0 +1,78 @@
+.dashboard {
+    padding: 2rem 2.5rem 3rem;
+}
+
+.dashboard-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.dashboard-toolbar h1 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+}
+
+.dashboard-toolbar .btn {
+    text-decoration: none;
+}
+
+.presentation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.presentation-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--color-primary) 30%, white);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+}
+
+.presentation-card-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.presentation-card-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.presentation-card-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.presentation-card-meta h2 {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+.presentation-card-meta time {
+    flex-shrink: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.presentation-card .btn {
+    align-self: flex-start;
+    text-decoration: none;
+}
+
+.dashboard-empty {
+    color: var(--color-text-muted);
+}

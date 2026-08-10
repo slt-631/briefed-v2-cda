@@ -1,0 +1,17 @@
+<header class="site-header">
+    <a href="{{ path('app_home') }}" class="site-logo">
+        <img src="{{ asset('images/logos/logo 1.png') }}" alt="briefed!">
+    </a>
+
+    {% if app.user %}
+        <nav class="site-nav">
+            <a href="{{ path('app_presentation_index') }}" class="btn btn-primary">Dashboard</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+        </nav>
+        {% else %}
+            <nav class="site-nav">
+                <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
+                <a href="{{ path('app_register') }}" class="btn btn-secondary">Inscription</a>
+            </nav>
+    {% endif %}
+</header>

@@ -2,10 +2,12 @@
 
 @import "./_tokens.css";
 @import "./_base.css";
+@import "./components/_header.css";
 
 @import "./components/_buttons.css";
 @import "./components/_forms.css";
 @import "./components/_range.css";
-@import "./components/cards.css";
+@import "./components/_cards.css";
 
 @import "./pages/_editor.css";
+@import "./pages/_dashboard.css";

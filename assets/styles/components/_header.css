@@ -1,0 +1,19 @@
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 25%, white);
+}
+
+.site-logo img {
+    display: block;
+    height: 3rem;
+    width: auto;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
