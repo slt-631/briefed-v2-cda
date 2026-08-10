@@ -34,7 +34,7 @@ class Presentation
     private ?string $backgroundColor = null;
 
     #[ORM\Column(length: 20)]
-    #[Assert\Choice(choices: ['1:1', '16:9', '4:3'], message: 'Format non supporté.')]
+    #[Assert\Choice(choices: ['carre', 'paysage', 'standard'], message: 'Format non supporté.')]
     private ?string $format = null;
 
     #[ORM\Column]

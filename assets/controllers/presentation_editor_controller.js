@@ -33,9 +33,9 @@ export default class extends Controller {
 
     connect() {
         this.sizes = {
-            "paysage": { width: 800, height: 450 },
-            "standard": { width: 800, height: 600 },
-            "carre": { width: 600, height: 600 },
+            paysage: { width: 1000, height: 563 },
+            standard: { width: 1000, height: 750 },
+            carre: { width: 750, height: 750 },
         };
 
         this.image = null;
@@ -255,6 +255,7 @@ export default class extends Controller {
         const size = this.sizes[format] || this.sizes["paysage"];
         this.canvasTarget.width = size.width;
         this.canvasTarget.height = size.height;
+        this.draw();
     }
 
     syncPositionNumbers() {
@@ -273,6 +274,7 @@ export default class extends Controller {
             }
         };
         img.src = url;
+
     }
 
     showImagePreview(url, isObjectUrl = false) {
@@ -296,8 +298,8 @@ export default class extends Controller {
     }
 
     getScaledSize(scale = Number(this.scaleInputTarget.value)) {
-        const baseWidth = 600;
-        const baseHeight = 350;
+        const baseWidth = this.image.naturalWidth;
+        const baseHeight = this.image.naturalHeight;
 
         return {
             width: baseWidth * scale,
