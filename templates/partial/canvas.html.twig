@@ -1,4 +1,5 @@
 <div
+    class="editor"
     data-controller="presentation-editor"
     data-presentation-editor-bg-value="{{ presentation.backgroundColor|default('#1a1a1a') }}"
     data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
@@ -6,17 +7,45 @@
 >
     {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
     {{ form_errors(form) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.backgroundColor, {
-        attr: { 'data-presentation-editor-target': 'colorInput' }
-    }) }}
-    {{ form_row(form.format, {
-        attr: { 'data-presentation-editor-target': 'formatInput'}
-    }) }}
-    {{ form_row(form.imageFile, {
-        attr: { 'data-presentation-editor-target': 'imageInput' }
-    }) }}
-    {{ form_row(form.posX, {
+
+    <div class="sidebar">
+
+        <div>
+            <!-- logo-->
+            {{ form_row(form.title) }}
+        </div>
+
+        <div>
+            <h5>FORMAT</h5>
+            {{ form_row(form.format, {
+                attr: { 'data-presentation-editor-target': 'formatInput'}
+            }) }}
+
+        </div>
+
+        <div>
+            <h5>COULEURS DU CANVA</h5>
+            {{ form_row(form.backgroundColor, {
+                attr: { 'data-presentation-editor-target': 'colorInput' }
+            }) }}
+        </div>
+
+        <div>
+            <h5>IMAGE</h5>
+            {{ form_row(form.imageFile, {
+                attr: { 'data-presentation-editor-target': 'imageInput' }
+            }) }}
+
+            <button
+                type="button"
+                data-presentation-editor-target="centerButton"
+            >
+                Centrer
+            </button>
+
+
+
+            {{ form_row(form.posX, {
         attr: { 'data-presentation-editor-target': 'posXInput' }
     }) }}
     <label>
@@ -55,15 +84,104 @@
             data-presentation-editor-target="scaleNumberInput"
         >
     </label>
+        </div>
+
+        <div>
+            <h5>BORDURE</h5>
+            {{ form_row(form.border, {
+                attr: { 'data-presentation-editor-target': 'borderInput' }
+            }) }}
+            <label>
+                Valeur bordure (px)
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="1"
+                    data-presentation-editor-target="borderNumberInput"
+                >
+            </label>
+            {{ form_row(form.borderColor, {
+                attr: { 'data-presentation-editor-target': 'borderColorInput' }
+            }) }}
+            {{ form_row(form.borderOpacity, {
+                attr: { 'data-presentation-editor-target': 'borderOpacityInput' }
+            }) }}
+            <label>
+                Valeur Opacité de la bordure (%)
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="1"
+                    data-presentation-editor-target="borderOpacityNumberInput"
+                >
+            </label>
+        </div>
+
+        <div>
+            <h5>ARRONDIS</h5>
+            {{ form_row(form.radius, {
+                attr: { 'data-presentation-editor-target': 'radiusInput' }
+            }) }}
+            <label>
+                Valeur Radius (px)
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="1"
+                    data-presentation-editor-target="radiusNumberInput"
+                >
+            </label>
+        </div>
+
+        <div>
+            <h5>OMBRE</h5>
+            {{ form_row(form.shadowType, {
+                attr: { 'data-presentation-editor-target': 'shadowTypeInput' }
+            }) }}
+            {{ form_row(form.shadowOpacity, {
+                attr: { 'data-presentation-editor-target': 'shadowOpacityInput' }
+            }) }}
+            <label>
+                Valeur Opacité de l'ombre (%)
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="1"
+                    data-presentation-editor-target="shadowOpacityNumberInput"
+                >
+            </label>
+            {{ form_row(form.shadowAngle, {
+                attr: { 'data-presentation-editor-target': 'shadowAngleInput' }
+            }) }}
+            <label>
+                Direction de l'ombre (°)
+                <input
+                    type="number"
+                    min="0"
+                    max="360"
+                    step="1"
+                    data-presentation-editor-target="shadowAngleNumberInput"
+                >
+            </label>
+        </div>
 
 
-    <button
-        type="button"
-        data-presentation-editor-target="centerButton"
-    >
-        Centrer
-    </button>
+   <div>
+       <button type="submit">{{ submit_label|default('Enregistrer') }}</button>
+       <button
+           type="button"
+           data-presentation-editor-target="exportButton"
+       >
+           Exporter PNG
+       </button>
+       {{ form_end(form) }}
+   </div>
 
+    </div>
     <div class="presentation-preview">
         <canvas
             data-presentation-editor-target="canvas"
@@ -71,83 +189,4 @@
             height="450"
         ></canvas>
     </div>
-    {{ form_row(form.border, {
-        attr: { 'data-presentation-editor-target': 'borderInput' }
-    }) }}
-    <label>
-        Valeur bordure (px)
-        <input
-            type="number"
-            min="0"
-            max="100"
-            step="1"
-            data-presentation-editor-target="borderNumberInput"
-        >
-    </label>
-    {{ form_row(form.borderColor, {
-        attr: { 'data-presentation-editor-target': 'borderColorInput' }
-    }) }}
-    {{ form_row(form.borderOpacity, {
-        attr: { 'data-presentation-editor-target': 'borderOpacityInput' }
-    }) }}
-    <label>
-        Valeur Opacité de la bordure (%)
-        <input
-            type="number"
-            min="0"
-            max="100"
-            step="1"
-            data-presentation-editor-target="borderOpacityNumberInput"
-        >
-    </label>
-    {{ form_row(form.radius, {
-        attr: { 'data-presentation-editor-target': 'radiusInput' }
-    }) }}
-    <label>
-        Valeur Radius (px)
-        <input
-            type="number"
-            min="0"
-            max="100"
-            step="1"
-            data-presentation-editor-target="radiusNumberInput"
-        >
-    </label>
-    {{ form_row(form.shadowType, {
-        attr: { 'data-presentation-editor-target': 'shadowTypeInput' }
-    }) }}
-    {{ form_row(form.shadowOpacity, {
-        attr: { 'data-presentation-editor-target': 'shadowOpacityInput' }
-    }) }}
-    <label>
-        Valeur Opacité de l'ombre (%)
-        <input
-            type="number"
-            min="0"
-            max="100"
-            step="1"
-            data-presentation-editor-target="shadowOpacityNumberInput"
-        >
-    </label>
-    {{ form_row(form.shadowAngle, {
-        attr: { 'data-presentation-editor-target': 'shadowAngleInput' }
-    }) }}
-    <label>
-        Direction de l'ombre (°)
-        <input
-            type="number"
-            min="0"
-            max="360"
-            step="1"
-            data-presentation-editor-target="shadowAngleNumberInput"
-        >
-    </label>
-    <button type="submit">{{ submit_label|default('Enregistrer') }}</button>
-    <button
-    type="button"
-    data-presentation-editor-target="exportButton"
-    >
-    Exporter PNG
-    </button>
-    {{ form_end(form) }}
 </div>
