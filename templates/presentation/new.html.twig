@@ -3,7 +3,7 @@
 {% block title %}Nouvelle présentation{% endblock %}
 
 {% block body %}
-    <h1>Nouvelle présentation</h1>
+    
 
     {% include 'partial/canvas.html.twig' with {
         form: form,
@@ -11,5 +11,5 @@
         submit_label: 'Créer'
     } %}
 
-    <a href="{{ path('app_presentation_index') }}">Retour</a>
+    
 {% endblock %}

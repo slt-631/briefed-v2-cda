@@ -26,6 +26,8 @@ export default class extends Controller {
         "shadowOpacityNumberInput",
         "shadowAngleNumberInput",
         "exportButton",
+        "colorHexLabel",
+        "imagePreview",
     ];
     static values = { bg: String, imageUrl: String, format: String };
 
@@ -37,14 +39,16 @@ export default class extends Controller {
         };
 
         this.image = null;
+        this.previewObjectUrl = null;
 
-        
-        const initialFormat = this.formatValue || this.formatInputTarget.value || "16:9";
+        const initialFormat =
+            this.formatValue || this.formatInputTarget.value || "16:9";
         this.applyCanvasFormat(initialFormat);
 
         this.draw();
 
         if (this.imageUrlValue) {
+            this.showImagePreview(this.imageUrlValue);
             this.loadImage(this.imageUrlValue, false);
         }
 
@@ -53,14 +57,25 @@ export default class extends Controller {
         this.posXNumberInputTarget.value = Number(this.posXInputTarget.value);
         this.posYNumberInputTarget.value = Number(this.posYInputTarget.value);
         this.scaleNumberInputTarget.value = Number(this.scaleInputTarget.value);
-        this.borderNumberInputTarget.value = Number(this.borderInputTarget.value);
-        this.borderOpacityNumberInputTarget.value = Number(this.borderOpacityInputTarget.value);
-        this.radiusNumberInputTarget.value = Number(this.radiusInputTarget.value);
-        this.shadowOpacityNumberInputTarget.value = Number(this.shadowOpacityInputTarget.value);
-        this.shadowAngleNumberInputTarget.value = Number(this.shadowAngleInputTarget.value);
 
+        this.borderNumberInputTarget.value = Number(
+            this.borderInputTarget.value,
+        );
+        this.borderOpacityNumberInputTarget.value = Number(
+            this.borderOpacityInputTarget.value,
+        );
+        this.radiusNumberInputTarget.value = Number(
+            this.radiusInputTarget.value,
+        );
+        this.shadowOpacityNumberInputTarget.value = Number(
+            this.shadowOpacityInputTarget.value,
+        );
+        this.shadowAngleNumberInputTarget.value = Number(
+            this.shadowAngleInputTarget.value,
+        );
 
         this.colorInputTarget.addEventListener("input", (event) => {
+            this.colorHexLabelTarget.textContent = event.target.value;
             this.bgValue = event.target.value;
             this.draw();
         });
@@ -76,7 +91,9 @@ export default class extends Controller {
                 return;
             }
 
-            this.loadImage(URL.createObjectURL(file), true);
+            const objectUrl = URL.createObjectURL(file);
+            this.showImagePreview(objectUrl, true);
+            this.loadImage(objectUrl, true);
         });
 
         this.posXInputTarget.addEventListener("input", (event) => {
@@ -109,20 +126,26 @@ export default class extends Controller {
             this.draw();
         });
 
-
         this.borderColorInputTarget.addEventListener("input", () => {
             this.draw();
         });
 
         this.borderOpacityInputTarget.addEventListener("input", (event) => {
-            this.borderOpacityNumberInputTarget.value = Number(event.target.value);
+            this.borderOpacityNumberInputTarget.value = Number(
+                event.target.value,
+            );
             this.draw();
         });
 
-        this.borderOpacityNumberInputTarget.addEventListener("input", (event) => {
-            this.borderOpacityInputTarget.value = Number(event.target.value);
-            this.draw();
-        });
+        this.borderOpacityNumberInputTarget.addEventListener(
+            "input",
+            (event) => {
+                this.borderOpacityInputTarget.value = Number(
+                    event.target.value,
+                );
+                this.draw();
+            },
+        );
 
         this.radiusInputTarget.addEventListener("input", (event) => {
             this.radiusNumberInputTarget.value = Number(event.target.value);
@@ -134,22 +157,33 @@ export default class extends Controller {
             this.draw();
         });
 
-        this.shadowTypeInputTarget.addEventListener("change", () => {
-            this.draw();
+        this.shadowTypeInputTargets.forEach((radio) => {
+            radio.addEventListener("change", () => {
+                this.draw();
+            });
         });
 
         this.shadowOpacityInputTarget.addEventListener("input", (event) => {
-            this.shadowOpacityNumberInputTarget.value = Number(event.target.value);
+            this.shadowOpacityNumberInputTarget.value = Number(
+                event.target.value,
+            );
             this.draw();
         });
 
-        this.shadowOpacityNumberInputTarget.addEventListener("input", (event) => {
-            this.shadowOpacityInputTarget.value = Number(event.target.value);
-            this.draw();
-        });
+        this.shadowOpacityNumberInputTarget.addEventListener(
+            "input",
+            (event) => {
+                this.shadowOpacityInputTarget.value = Number(
+                    event.target.value,
+                );
+                this.draw();
+            },
+        );
 
         this.shadowAngleInputTarget.addEventListener("input", (event) => {
-            this.shadowAngleNumberInputTarget.value = Number(event.target.value);
+            this.shadowAngleNumberInputTarget.value = Number(
+                event.target.value,
+            );
             this.draw();
         });
 
@@ -157,8 +191,6 @@ export default class extends Controller {
             this.shadowAngleInputTarget.value = Number(event.target.value);
             this.draw();
         });
-
-
 
         this.scaleInputTarget.addEventListener("input", (event) => {
             const previousScale = this.previousScale;
@@ -184,7 +216,6 @@ export default class extends Controller {
         });
 
         this.scaleNumberInputTarget.addEventListener("input", (event) => {
-
             const previousScale = this.previousScale;
             const scale = Number(event.target.value);
 
@@ -202,7 +233,7 @@ export default class extends Controller {
             this.syncPositionNumbers();
 
             this.previousScale = scale;
-        
+
             this.scaleInputTarget.value = Number(event.target.value);
 
             this.draw();
@@ -217,14 +248,12 @@ export default class extends Controller {
         });
     }
 
-
     applyCanvasFormat(format) {
         const size = this.sizes[format] || this.sizes["16:9"];
         this.canvasTarget.width = size.width;
         this.canvasTarget.height = size.height;
     }
 
-    
     syncPositionNumbers() {
         this.posXNumberInputTarget.value = this.posXInputTarget.value;
         this.posYNumberInputTarget.value = this.posYInputTarget.value;
@@ -241,6 +270,26 @@ export default class extends Controller {
             }
         };
         img.src = url;
+    }
+
+    showImagePreview(url, isObjectUrl = false) {
+        if (!this.hasImagePreviewTarget) {
+            return;
+        }
+
+        if (this.previewObjectUrl) {
+            URL.revokeObjectURL(this.previewObjectUrl);
+            this.previewObjectUrl = null;
+        }
+
+        if (isObjectUrl) {
+            this.previewObjectUrl = url;
+        }
+
+        this.imagePreviewTarget.src = url;
+        this.imageInputTarget
+            .closest(".image-field")
+            ?.classList.add("is-filled");
     }
 
     getScaledSize(scale = Number(this.scaleInputTarget.value)) {
@@ -272,7 +321,6 @@ export default class extends Controller {
     }
 
     export() {
-        
         if (!this.image) {
             return alert("Aucune image chargée");
         }
@@ -283,7 +331,6 @@ export default class extends Controller {
         link.href = canvas.toDataURL("image/png");
         link.click();
     }
-
 
     draw() {
         const canvas = this.canvasTarget;
@@ -296,11 +343,14 @@ export default class extends Controller {
             const y = Number(this.posYInputTarget.value);
             const { width, height } = this.getScaledSize();
             const radius = Number(this.radiusInputTarget.value);
-            this.drawShadow(ctx, x, y, width, height, radius)
+            this.drawShadow(ctx, x, y, width, height, radius);
 
             const borderWidth = Number(this.borderInputTarget.value);
             const borderOpacity = Number(this.borderOpacityInputTarget.value);
-            const borderColor = this.hexToRGB(this.borderColorInputTarget.value, borderOpacity/100);
+            const borderColor = this.hexToRGB(
+                this.borderColorInputTarget.value,
+                borderOpacity / 100,
+            );
             if (borderWidth > 0) {
                 ctx.strokeStyle = borderColor;
                 ctx.lineWidth = borderWidth;
@@ -315,12 +365,13 @@ export default class extends Controller {
             ctx.clip();
             ctx.drawImage(this.image, x, y, width, height);
             ctx.restore();
-
         }
     }
 
     drawShadow(ctx, x, y, width, height, radius) {
-        const type = this.shadowTypeInputTarget.value;
+        const type =
+            this.shadowTypeInputTargets.find((radio) => radio.checked)?.value ??
+            "none";
         const opacity = Number(this.shadowOpacityInputTarget.value);
         const angle = Number(this.shadowAngleInputTarget.value);
         let blur = 0;
@@ -339,12 +390,12 @@ export default class extends Controller {
         }
 
         const shadowAngle = angle + 180;
-        const rad = shadowAngle * Math.PI / 180;
+        const rad = (shadowAngle * Math.PI) / 180;
         const offsetX = Math.cos(rad) * distance;
         const offsetY = Math.sin(rad) * distance;
 
         ctx.save();
-        ctx.shadowColor = `rgba(0, 0, 0, ${opacity/100})`;
+        ctx.shadowColor = `rgba(0, 0, 0, ${opacity / 100})`;
         ctx.shadowBlur = blur;
         ctx.shadowOffsetX = offsetX;
         ctx.shadowOffsetY = offsetY;
@@ -356,10 +407,10 @@ export default class extends Controller {
     }
 
     hexToRGB(hex, alpha) {
-        const r = parseInt(hex.slice(1, 3), 16)
-        const g = parseInt(hex.slice(3, 5), 16)
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
         const b = parseInt(hex.slice(5, 7), 16);
-    
+
         if (alpha) {
             return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
         } else {
@@ -367,4 +418,3 @@ export default class extends Controller {
         }
     }
 }
-

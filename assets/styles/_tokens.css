@@ -1,0 +1,44 @@
+:root {
+    --color-primary: #6366f1;
+
+    --color-gradient-start: #a78bfa;
+    --color-gradient-end: #6366f1;
+
+    --color-bg: #ffffff;
+    --color-bg-app: #e1e2e4;
+    --color-bg-canvas: #f9f9f9;
+    --color-bg-input: #f3f4f6;
+    --color-bg-hero: #928eb6;
+
+    --color-text: #111827;
+    --color-text-body: #4b5563;
+    --color-text-muted: #6b7280;
+    --color-text-placeholder: #9ca3af;
+    --color-text-inverse: #ffffff;
+
+    --color-border: #e5e7eb;
+
+    --color-dropzone-bg: color-mix(in srgb, var(--color-primary) 8%, white);
+    --color-dropzone-border: color-mix(
+        in srgb,
+        var(--color-primary) 45%,
+        white
+    );
+    --color-dropzone-bg-hover: color-mix(
+        in srgb,
+        var(--color-primary) 14%,
+        white
+    );
+
+    --font-sans: "Poppins", sans-serif;
+    --font-size-xs: 0.6875rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.125rem;
+    --font-size-lg: 1.5rem;
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+}

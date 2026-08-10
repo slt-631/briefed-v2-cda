@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier{% endblock %}
+{% block title %}{{ presentation.title }}{% endblock %}
 
 {% block body %}
-    <h1>Modifier « {{ presentation.title }} »</h1>
 
     {% include 'partial/canvas.html.twig' with {
         form: form,
@@ -11,5 +10,5 @@
         submit_label: 'Enregistrer'
     } %}
 
-    <a href="{{ path('app_presentation_index') }}">Retour</a>
+    {# <a href="{{ path('app_presentation_index') }}">Retour</a> #}
 {% endblock %}

@@ -1,0 +1,18 @@
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+}
+
+.btn.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border: var(--color-primary);
+}
+
+.btn.btn-secondary {
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}

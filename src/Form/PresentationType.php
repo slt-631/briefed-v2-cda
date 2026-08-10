@@ -20,13 +20,13 @@ class PresentationType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre',
+                'label' => false,
             ])
             ->add('backgroundColor', ColorType::class, [
-                'label' => 'Couleur de fond',
+                'label' => false,
             ])
             ->add('format', ChoiceType::class, [
-                'label' => 'Format',
+                'label' => false,
                 'choices' => [
                     'Carré (1:1)' => '1:1',
                     'Paysage (16:9)' => '16:9',
@@ -34,7 +34,7 @@ class PresentationType extends AbstractType
                 ],
             ])
             ->add('imageFile', FileType::class, [
-                'label' => 'Image',
+                'label' => false,
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -67,7 +67,7 @@ class PresentationType extends AbstractType
                 'label' => 'Couleur de bordure',
             ])
             ->add('borderOpacity', RangeType::class, [
-                'label' => 'Opacité de la bordure',
+                'label' => 'Opacité',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('radius', RangeType::class, [
@@ -75,19 +75,24 @@ class PresentationType extends AbstractType
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowType', ChoiceType::class, [
-                'label' => 'Ombre',
+                'label' => false,
                 'choices' => [
-                    'Aucune' => 'none',
+                    'None' => 'none',
                     'Spread' => 'spread',
                     'Hug' => 'hug',
                 ],
+                'expanded' => true,
+                'multiple' => false,
+                'choice_attr' => fn () => [
+                    'data-presentation-editor-target' => 'shadowTypeInput',
+                ],
             ])
             ->add('shadowOpacity', RangeType::class, [
-                'label' => 'Opacité de l\'ombre',
+                'label' => 'Opacité',
                 'attr' => ['min' => 0, 'max' => 100, 'step' => 1],
             ])
             ->add('shadowAngle', RangeType::class, [
-                'label' => 'Direction de l\'ombre',
+                'label' => 'Direction',
                 'attr' => ['min' => 0, 'max' => 360, 'step' => 1],
             ])
         ;
