@@ -18,10 +18,9 @@
         </div>
         <div class="presentation-grid">
             {% for presentation in presentations %}
-                <article class="presentation-card">
+                <div class="presentation-card">
                     <div
-                        class="presentation-card-thumb"
-                        style="background-color: {{ presentation.backgroundColor }}"
+                        class="presentation-card-thumbnail"
                     >
                         {% if presentation.imageFilename %}
                             <img
@@ -32,17 +31,27 @@
                     </div>
                     <div class="presentation-card-meta">
                         <h2>{{ presentation.title }}</h2>
-                        <time>Modifié le {{ presentation.createdAt|date('d/m/Y') }}</time>
+                        <time>Modifié le {{ presentation.updatedAt|date('d/m/Y') }}</time>
                     </div>
-                    <a
-                        href="{{ path('app_presentation_edit', { id: presentation.id }) }}"
-                        class="btn btn-secondary"
-                    >
-                        Modifier
-                    </a>
-                </article>
+                    <div class="action-btn">
+                        <a
+                            href="{{ path('app_presentation_edit', { id: presentation.id }) }}"
+                            class="btn btn-secondary"
+                        >
+                            Modifier
+                        </a>
+                        <form
+                            method="post"
+                            action="{{ path('app_presentation_delete', { id: presentation.id }) }}"
+                            onsubmit="return confirm('Voulez-vous vraiment supprimer cette présentation ?');"
+                        >
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ presentation.id) }}">
+                            <button type="submit" class="btn btn-delete">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
             {% else %}
-                <p class="dashboard-empty">Aucune présentation pour le moment.</p>
+                <p>Aucune présentation pour le moment.</p>
             {% endfor %}
         </div>
     </div>

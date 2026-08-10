@@ -33,9 +33,9 @@ export default class extends Controller {
 
     connect() {
         this.sizes = {
-            "16:9": { width: 800, height: 450 },
-            "4:3": { width: 800, height: 600 },
-            "1:1": { width: 600, height: 600 },
+            "paysage": { width: 800, height: 450 },
+            "standard": { width: 800, height: 600 },
+            "carre": { width: 600, height: 600 },
         };
 
         this.image = null;
@@ -80,10 +80,13 @@ export default class extends Controller {
             this.draw();
         });
 
-        this.formatInputTarget.addEventListener("change", (event) => {
-            this.applyCanvasFormat(event.target.value);
-            this.center();
+        this.formatInputTargets.forEach((radio) => {
+            radio.addEventListener("change", (event) => {
+                this.applyCanvasFormat(event.target.value);
+                this.center();
+            });
         });
+
 
         this.imageInputTarget.addEventListener("change", (event) => {
             const file = event.target.files[0];
@@ -249,7 +252,7 @@ export default class extends Controller {
     }
 
     applyCanvasFormat(format) {
-        const size = this.sizes[format] || this.sizes["16:9"];
+        const size = this.sizes[format] || this.sizes["paysage"];
         this.canvasTarget.width = size.width;
         this.canvasTarget.height = size.height;
     }

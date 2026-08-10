@@ -28,9 +28,14 @@ class PresentationType extends AbstractType
             ->add('format', ChoiceType::class, [
                 'label' => false,
                 'choices' => [
-                    'Carré (1:1)' => '1:1',
-                    'Paysage (16:9)' => '16:9',
-                    'Standard (4:3)' => '4:3',
+                    'Carré (1:1)' => 'carre',
+                    'Paysage (16:9)' => 'paysage',
+                    'Standard (4:3)' => 'standard',
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'choice_attr' => fn () => [
+                    'data-presentation-editor-target' => 'formatInput',
                 ],
             ])
             ->add('imageFile', FileType::class, [

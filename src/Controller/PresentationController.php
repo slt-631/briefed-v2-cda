@@ -30,6 +30,8 @@ class PresentationController extends AbstractController
         return $this->render('presentation/index.html.twig', [
             'presentations' => $presentations,
         ]);
+
+
     }
 
     #[Route('/new', name: 'app_presentation_new', methods: ['GET', 'POST'])]
@@ -70,6 +72,7 @@ class PresentationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($uploader, $form->get('imageFile')->getData(), $presentation);
+            $presentation->setUpdatedAt(new \DateTimeImmutable());
             $em->flush();
 
             return $this->redirectToRoute('app_presentation_index');

@@ -82,6 +82,9 @@ class Presentation
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function __construct()
 {
     $this->createdAt = new \DateTimeImmutable();
@@ -98,6 +101,7 @@ class Presentation
     $this->shadowType = 'none';
     $this->shadowOpacity = 40;
     $this->shadowAngle = 135.0;
+    $this->updatedAt = new \DateTimeImmutable();
 }
 
     public function getId(): ?int
@@ -296,5 +300,17 @@ class Presentation
 
         return $this;
     }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }   
 }
 

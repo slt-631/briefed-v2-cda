@@ -1,20 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}briefed! — Présentations nouvelle génération{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% include 'partial/header.html.twig' %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<main class="home">
+    <section class="home-hero">
+        <h1>Créez des présentations qui marquent les esprits</h1>
+        <p>
+            La plateforme professionnelle d’édition et de partage de présentations nouvelle génération.
+            Conçue pour la clarté, la rapidité et l’impact visuel.
+        </p>
+        <a
+            href="{{ app.user ? path('app_presentation_index') : path('app_register') }}"
+            class="btn btn-primary home-cta"
+        >
+            Commencer maintenant
+        </a>
+    </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/st63/Desktop/briefed-v2-cda/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/Users/st63/Desktop/briefed-v2-cda/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
+    <section class="home-preview" aria-hidden="true">
+        <img
+            src="{{ asset('images/home-preview.png') }}"
+            alt=""
+            class="home-preview-img"
+        >
+    </section>
+</main>
 {% endblock %}

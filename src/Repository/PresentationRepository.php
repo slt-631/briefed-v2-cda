@@ -23,7 +23,7 @@ class PresentationRepository extends ServiceEntityRepository
 public function findByOwner(User $owner): array
 {
         $qb = $this->createQueryBuilder('p')
-        ->andWhere('p.owner = :owner')
+        ->where('p.owner = :owner')
         ->setParameter('owner', $owner)
         ->orderBy('p.createdAt', 'DESC');
 

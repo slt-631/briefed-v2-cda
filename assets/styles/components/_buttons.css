@@ -5,7 +5,9 @@
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
+    appearance: none;
 }
+
 
 .btn:hover {
     opacity: 0.8;
@@ -23,3 +25,11 @@
     color: var(--color-primary);
     border: 1px solid var(--color-primary);
 }
+
+.btn.btn-delete {
+    background-color: var(--color-bg);
+    color: red;
+    border: 1px solid red;
+}
+
+
