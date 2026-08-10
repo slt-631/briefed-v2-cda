@@ -87,7 +87,6 @@ export default class extends Controller {
             });
         });
 
-
         this.imageInputTarget.addEventListener("change", (event) => {
             const file = event.target.files[0];
             if (!file) {
@@ -274,7 +273,6 @@ export default class extends Controller {
             }
         };
         img.src = url;
-
     }
 
     showImagePreview(url, isObjectUrl = false) {
