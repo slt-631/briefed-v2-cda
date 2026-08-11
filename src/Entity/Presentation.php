@@ -90,7 +90,7 @@ class Presentation
     $this->createdAt = new \DateTimeImmutable();
     $this->title = "Ma presentation";
     $this->backgroundColor = '#1a1a1a';
-    $this->format = '16:9';
+    $this->format = 'paysage';
     $this->posX = 100.0;
     $this->posY = 50.0;
     $this->scale = 1.0;
@@ -311,6 +311,6 @@ class Presentation
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }   
+    }
 }
 
