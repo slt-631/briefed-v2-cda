@@ -43,11 +43,16 @@ class PresentationController extends AbstractController
         $presentation = new Presentation();
         $presentation->setOwner($user);
 
+        if ($presentation->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(PresentationType::class, $presentation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($uploader, $form->get('imageFile')->getData(), $presentation);
+            $em->persist($presentation->getBackground());
             $em->persist($presentation);
             $em->flush();
 
@@ -73,6 +78,7 @@ class PresentationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($uploader, $form->get('imageFile')->getData(), $presentation);
             $presentation->setUpdatedAt(new \DateTimeImmutable());
+            $em->persist($presentation->getBackground());
             $em->flush();
 
             return $this->redirectToRoute('app_presentation_index');

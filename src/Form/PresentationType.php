@@ -22,9 +22,7 @@ class PresentationType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => false,
             ])
-            ->add('backgroundColor', ColorType::class, [
-                'label' => false,
-            ])
+            ->add('background', BackgroundType::class)
             ->add('format', ChoiceType::class, [
                 'label' => false,
                 'choices' => [

@@ -85,11 +85,15 @@ class Presentation
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'presentations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Background $background = null;
+
     public function __construct()
 {
     $this->createdAt = new \DateTimeImmutable();
     $this->title = "Ma presentation";
-    $this->backgroundColor = '#1a1a1a';
+    $this->background = new Background();
     $this->format = 'paysage';
     $this->posX = 100.0;
     $this->posY = 50.0;
@@ -309,6 +313,18 @@ class Presentation
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getBackground(): ?Background
+    {
+        return $this->background;
+    }
+
+    public function setBackground(?Background $background): static
+    {
+        $this->background = $background;
 
         return $this;
     }
