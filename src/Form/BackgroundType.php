@@ -6,9 +6,11 @@ use App\Entity\Background;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use function Sodium\add;
+use Symfony\Component\Validator\Constraints\Image;
 
 class BackgroundType extends AbstractType
 {
@@ -18,7 +20,7 @@ class BackgroundType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => false,
                 'choices' => [
-                    'Solide' => 'solide',
+                    'Solide' => 'solid',
                     'Dégradé' => 'degrade',
                     'Image' => 'image',
                 ]])

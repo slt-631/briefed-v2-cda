@@ -1,7 +1,7 @@
 <div
     class="editor"
     data-controller="presentation-editor"
-    data-presentation-editor-bg-value="{{ presentation.backgroundColor|default('#1a1a1a') }}"
+    data-presentation-editor-bg-value="{{ presentation.background.color1|default('#1a1a1a') }}"
     data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
     data-presentation-editor-format-value="{{ presentation.format|default('16:9') }}"
 >
@@ -33,7 +33,7 @@
         <div>
     <h5>COULEUR DE FOND</h5>
     <label class="color-field">
-        {{ form_widget(form.backgroundColor, {
+        {{ form_widget(form.background.color1, {
             attr: { 'data-presentation-editor-target': 'colorInput' }
         }) }}
         <span class="color-field-hex" data-presentation-editor-target="colorHexLabel"> {{ presentation.backgroundColor }}</span>
