@@ -37,9 +37,7 @@
                <div class="cards-choice">
                 {% for child in form.background.type %}
                     <label class="card-choice">
-                        {{ form_widget(child, {
-                            attr: { 'data-presentation-editor-target': 'bgTypeInput' }
-                            }) }}
+                        {{ form_widget(child) }}
                         <img
                             src="{{ asset('images/type/' ~ child.vars.value ~ '.png') }}"
                             alt="{{ child.vars.label }}"
