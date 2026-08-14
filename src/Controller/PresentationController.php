@@ -52,7 +52,7 @@ class PresentationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($uploader, $form->get('imageFile')->getData(), $presentation);
-            $em->persist($presentation->getBackground());
+            $this->handleBackgroundImageUpload($uploader, $form->get('background')->get('backgroundImageFile')->getData(), $presentation);
             $em->persist($presentation);
             $em->flush();
 
@@ -77,6 +77,7 @@ class PresentationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($uploader, $form->get('imageFile')->getData(), $presentation);
+            $this->handleBackgroundImageUpload($uploader, $form->get('background')->get('backgroundImageFile')->getData(), $presentation);
             $presentation->setUpdatedAt(new \DateTimeImmutable());
             $em->persist($presentation->getBackground());
             $em->flush();
@@ -120,6 +121,21 @@ class PresentationController extends AbstractController
         $oldFilename = $presentation->getImageFilename();
 
         $presentation->setImageFilename($uploader->upload($imageFile));
+
+        if ($oldFilename) {
+            $uploader->remove($oldFilename);
+        }
+    }
+
+    private function handleBackgroundImageUpload(FileUploader $uploader, ?UploadedFile $imageFile, Presentation $presentation): void
+    {
+        if (!$imageFile) {
+            return;
+        }
+
+        $oldFilename = $presentation->getBackground()->getImageFilename();
+
+            $presentation->getBackground()->setImageFilename($uploader->upload($imageFile));
 
         if ($oldFilename) {
             $uploader->remove($oldFilename);

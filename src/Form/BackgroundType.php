@@ -23,7 +23,13 @@ class BackgroundType extends AbstractType
                     'Solide' => 'solid',
                     'Dégradé' => 'degrade',
                     'Image' => 'image',
-                ]])
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'choice_attr' => fn () => [
+                    'data-presentation-editor-target' => 'bgTypeInput',
+                ],
+            ])
             ->add('color1', ColorType::class, [
                 'label' => false,
             ])

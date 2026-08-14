@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .card-choice {
@@ -46,7 +47,6 @@
     opacity: 0;
     pointer-events: none;
 }
-
 
 .presentation-card {
     display: flex;
@@ -95,4 +95,3 @@
     align-self: flex-start;
     text-decoration: none;
 }
-

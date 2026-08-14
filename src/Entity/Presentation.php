@@ -26,12 +26,9 @@ class Presentation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageFilename = null;
 
-    #[ORM\Column(length: 7)]
-    #[Assert\Regex(
-       pattern: '/^#[0-9a-fA-F]{6}$/',
-       message: 'La couleur doit être au format hexadécimal (ex: #1a1a1a).'
-     )]
-    private ?string $backgroundColor = null;
+    #[ORM\ManyToOne(inversedBy: 'presentations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Background $background = null;
 
     #[ORM\Column(length: 20)]
     #[Assert\Choice(choices: ['carre', 'paysage', 'standard'], message: 'Format non supporté.')]
@@ -84,10 +81,6 @@ class Presentation
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'presentations')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Background $background = null;
 
     public function __construct()
 {
@@ -149,17 +142,6 @@ class Presentation
         return $this;
     }
 
-    public function getBackgroundColor(): ?string
-    {
-        return $this->backgroundColor;
-    }
-
-    public function setBackgroundColor(string $backgroundColor): static
-    {
-        $this->backgroundColor = $backgroundColor;
-
-        return $this;
-    }
 
     public function getFormat(): ?string
     {

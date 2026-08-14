@@ -131,12 +131,12 @@ class Background
         return $this;
     }
 
-    public function getGradiantAngle(): ?float
+    public function getGradientAngle(): ?float
     {
         return $this->gradientAngle;
     }
 
-    public function setGradiantAngle(?float $gradiantAngle): static
+    public function setGradientAngle(?float $gradiantAngle): static
     {
         $this->gradientAngle = $gradiantAngle;
 

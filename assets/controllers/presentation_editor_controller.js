@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
     static targets = [
         "canvas",
-        "colorInput",
+        "color1Input",
         "imageInput",
         "posXInput",
         "posYInput",
@@ -26,10 +26,25 @@ export default class extends Controller {
         "shadowOpacityNumberInput",
         "shadowAngleNumberInput",
         "exportButton",
-        "colorHexLabel",
+        "color1HexLabel",
+        "color2HexLabel",
         "imagePreview",
+        "bgTypeInput",
+        "bgSolidFields",
+        "bgGradientFields",
+        "bgImageFields",
+        "color2Input",
+        "gradientAngleInput",
+        "backgroundImageInput",
+        "gradientAngleNumberInput",
+        "imageBackgroundPreview",
     ];
-    static values = { bg: String, imageUrl: String, format: String };
+    static values = {
+        bg: String,
+        imageUrl: String,
+        format: String,
+        backgroundImageUrl: String,
+    };
 
     connect() {
         this.sizes = {
@@ -38,7 +53,10 @@ export default class extends Controller {
             carre: { width: 750, height: 750 },
         };
 
+        this.updateBackgroundFields();
+
         this.image = null;
+        this.backgroundImage = null;
         this.previewObjectUrl = null;
 
         const initialFormat =
@@ -47,12 +65,21 @@ export default class extends Controller {
 
         this.draw();
 
+        if (this.backgroundImageUrlValue) {
+            this.showBackgroundImagePreview(this.backgroundImageUrlValue);
+            this.loadBackgroundImage(this.backgroundImageUrlValue);
+        }
+
         if (this.imageUrlValue) {
             this.showImagePreview(this.imageUrlValue);
-            this.loadImage(this.imageUrlValue, false);
+            this.loadOverlayImage(this.imageUrlValue, false);
         }
 
         this.previousScale = Number(this.scaleInputTarget.value);
+
+        this.gradientAngleNumberInputTarget.value = Number(
+            this.gradientAngleInputTarget.value,
+        );
 
         this.posXNumberInputTarget.value = Number(this.posXInputTarget.value);
         this.posYNumberInputTarget.value = Number(this.posYInputTarget.value);
@@ -74,9 +101,34 @@ export default class extends Controller {
             this.shadowAngleInputTarget.value,
         );
 
-        this.colorInputTarget.addEventListener("input", (event) => {
-            this.colorHexLabelTarget.textContent = event.target.value;
+        this.color1InputTarget.addEventListener("input", (event) => {
+            this.color1HexLabelTarget.textContent = event.target.value;
             this.bgValue = event.target.value;
+            this.draw();
+        });
+
+        this.bgTypeInputTargets.forEach((radio) => {
+            radio.addEventListener("change", () => {
+                this.updateBackgroundFields();
+            });
+        });
+
+        this.color2InputTarget.addEventListener("input", () => {
+            this.color2HexLabelTarget.textContent = event.target.value;
+            this.draw();
+        });
+
+        this.gradientAngleInputTarget.addEventListener("input", () => {
+            this.gradientAngleNumberInputTarget.value = Number(
+                this.gradientAngleInputTarget.value,
+            );
+            this.draw();
+        });
+
+        this.gradientAngleNumberInputTarget.addEventListener("input", () => {
+            this.gradientAngleInputTarget.value = Number(
+                this.gradientAngleNumberInputTarget.value,
+            );
             this.draw();
         });
 
@@ -95,7 +147,18 @@ export default class extends Controller {
 
             const objectUrl = URL.createObjectURL(file);
             this.showImagePreview(objectUrl, true);
-            this.loadImage(objectUrl, true);
+            this.loadOverlayImage(objectUrl, true);
+        });
+
+        this.backgroundImageInputTarget.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            const objectUrl = URL.createObjectURL(file);
+            this.showBackgroundImagePreview(objectUrl, true);
+            this.loadBackgroundImage(objectUrl);
         });
 
         this.posXInputTarget.addEventListener("input", (event) => {
@@ -262,7 +325,7 @@ export default class extends Controller {
         this.posYNumberInputTarget.value = this.posYInputTarget.value;
     }
 
-    loadImage(url, shouldCenter = false) {
+    loadOverlayImage(url, shouldCenter = false) {
         const img = new Image();
         img.onload = () => {
             this.image = img;
@@ -271,6 +334,15 @@ export default class extends Controller {
             } else {
                 this.draw();
             }
+        };
+        img.src = url;
+    }
+
+    loadBackgroundImage(url) {
+        const img = new Image();
+        img.onload = () => {
+            this.backgroundImage = img;
+            this.draw();
         };
         img.src = url;
     }
@@ -291,6 +363,21 @@ export default class extends Controller {
 
         this.imagePreviewTarget.src = url;
         this.imageInputTarget
+            .closest(".image-field")
+            ?.classList.add("is-filled");
+    }
+
+    showBackgroundImagePreview(url, isObjectUrl = false) {
+        if (!this.hasBackgroundImagePreviewTarget) {
+            return;
+        }
+
+        if (isObjectUrl) {
+            this.previewBackgroundObjectUrl = url;
+        }
+
+        this.imageBackgroundPreviewTarget.src = url;
+        this.backgroundImageInputTarget
             .closest(".image-field")
             ?.classList.add("is-filled");
     }
@@ -338,8 +425,43 @@ export default class extends Controller {
     draw() {
         const canvas = this.canvasTarget;
         const ctx = canvas.getContext("2d");
-        ctx.fillStyle = this.bgValue || this.colorInputTarget.value;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const type =
+            this.bgTypeInputTargets.find((radio) => radio.checked)?.value ??
+            "solid";
+
+        if (type === "solid") {
+            ctx.fillStyle = this.bgValue || this.color1InputTarget.value;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else if (type === "degrade") {
+            const color1 = this.color1InputTarget.value;
+            const color2 = this.color2InputTarget.value;
+            const angle = Number(this.gradientAngleInputTarget.value);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            const radians = (angle * Math.PI) / 180;
+            const length = Math.max(canvas.width, canvas.height);
+
+            const x1 = cx - Math.cos(radians) * length;
+            const y1 = cy - Math.sin(radians) * length;
+            const x2 = cx + Math.cos(radians) * length;
+            const y2 = cy + Math.sin(radians) * length;
+
+            const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else if (type === "image" && this.backgroundImage) {
+            ctx.drawImage(
+                this.backgroundImage,
+                0,
+                0,
+                canvas.width,
+                canvas.height,
+            );
+        }
 
         if (this.image) {
             const x = Number(this.posXInputTarget.value);
@@ -419,5 +541,16 @@ export default class extends Controller {
         } else {
             return "rgb(" + r + ", " + g + ", " + b + ")";
         }
+    }
+
+    updateBackgroundFields() {
+        const type =
+            this.bgTypeInputTargets.find((radio) => radio.checked)?.value ??
+            "solid";
+
+        this.bgSolidFieldsTarget.hidden = type === "image";
+        this.bgGradientFieldsTarget.hidden = type !== "degrade";
+        this.bgImageFieldsTarget.hidden = type !== "image";
+        this.draw();
     }
 }

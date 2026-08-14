@@ -3,7 +3,8 @@
     data-controller="presentation-editor"
     data-presentation-editor-bg-value="{{ presentation.background.color1|default('#1a1a1a') }}"
     data-presentation-editor-image-url-value="{{ presentation.imageFilename is defined and presentation.imageFilename ? asset('uploads/' ~ presentation.imageFilename) : '' }}"
-    data-presentation-editor-format-value="{{ presentation.format|default('16:9') }}"
+    data-presentation-editor-background-image-url-value="{{ presentation.background.imageFilename is defined and presentation.background.imageFilename ? asset('uploads/' ~ presentation.background.imageFilename) : '' }}"
+    data-presentation-editor-format-value="{{ presentation.format|default('paysage') }}"
 >
     {{ form_start(form, { attr: { enctype: 'multipart/form-data', class: 'editor-form' } }) }}
     {{ form_errors(form) }}
@@ -31,15 +32,81 @@
         </div>
 
         <div>
-    <h5>COULEUR DE FOND</h5>
-    <label class="color-field">
-        {{ form_widget(form.background.color1, {
-            attr: { 'data-presentation-editor-target': 'colorInput' }
-        }) }}
-        <span class="color-field-hex" data-presentation-editor-target="colorHexLabel"> {{ presentation.backgroundColor }}</span>
-        <i class="fa-solid fa-eye-dropper"></i>
-    </label>
-</div>
+    <h5>BACKGROUND</h5>
+
+               <div class="cards-choice">
+                {% for child in form.background.type %}
+                    <label class="card-choice">
+                        {{ form_widget(child, {
+                            attr: { 'data-presentation-editor-target': 'bgTypeInput' }
+                            }) }}
+                        <img
+                            src="{{ asset('images/type/' ~ child.vars.value ~ '.png') }}"
+                            alt="{{ child.vars.label }}"
+                        >
+                        <span>{{ child.vars.label }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+
+                <div data-presentation-editor-target="bgSolidFields">
+                    <label class="color-field">
+                    {{ form_widget(form.background.color1, {
+                    attr: { 'data-presentation-editor-target': 'color1Input' }
+                    }) }}
+                <span class="color-field-hex" data-presentation-editor-target="color1HexLabel">
+                    {{ presentation.background.color1 }}
+                </span>
+                <i class="fa-solid fa-eye-dropper"></i>
+                </label>
+                </div>
+
+        <div data-presentation-editor-target="bgGradientFields" hidden>
+        <label class="color-field">
+            {{ form_widget(form.background.color2, {
+                attr: { 'data-presentation-editor-target': 'color2Input' }
+            }) }}
+            <span class="color-field-hex" data-presentation-editor-target="color2HexLabel">
+                    {{ presentation.background.color2 }}
+                </span>
+                <i class="fa-solid fa-eye-dropper"></i>
+        </label>
+        <div class="range-field">
+            {{ form_label(form.background.gradientAngle) }}
+            {{ form_widget(form.background.gradientAngle, {
+                attr: { 'data-presentation-editor-target': 'gradientAngleInput' }
+            }) }}
+            <input
+                    class="range-field-value"
+                    type="number"
+                    min="0"
+                    max="360"
+                    step="1"
+                    data-presentation-editor-target="gradientAngleNumberInput"
+                >
+        </div>
+        </div>
+
+        <div data-presentation-editor-target="bgImageFields" hidden>
+
+             <label class="image-field{% if presentation.background.imageFilename is defined and presentation.background.imageFilename %} is-filled{% endif %}">
+                {{ form_widget(form.background.backgroundImageFile, {
+                    attr: { 'data-presentation-editor-target': 'backgroundImageInput' }
+                }) }}
+                <i class="fa-solid fa-plus"></i>
+                <p>Glisser une image</p>
+                <img
+                    class="image-field-preview"
+                    data-presentation-editor-target="imageBackgroundPreview"
+                    alt="Aperçu de l'image"
+                    {% if presentation.background.imageFilename is defined and presentation.background.imageFilename %}
+                        src="{{ asset('uploads/' ~ presentation.background.imageFilename) }}"
+                    {% endif %}
+                >
+            </label>
+        </div>
+
+        </div>
 
         <div>
             <h5>IMAGE</h5>

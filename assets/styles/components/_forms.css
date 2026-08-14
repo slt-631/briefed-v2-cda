@@ -8,6 +8,7 @@
     border-color: var(--color-border);
     cursor: pointer;
     font-size: var(--font-size-xs);
+    margin-bottom: 0.5rem;
 }
 
 .sidebar input[type="text"] {
@@ -27,6 +28,7 @@
     gap: 0.5rem;
     width: 100%;
     padding: 0.4rem 0.7rem;
+    margin-bottom: 0.5rem;
     background-color: var(--color-bg-input);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
