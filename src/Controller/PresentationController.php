@@ -53,6 +53,7 @@ class PresentationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($uploader, $form->get('imageFile')->getData(), $presentation);
             $this->handleBackgroundImageUpload($uploader, $form->get('background')->get('backgroundImageFile')->getData(), $presentation);
+            $em->persist($presentation->getBackground());
             $em->persist($presentation);
             $em->flush();
 
