@@ -1,19 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'auth/layout.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
-{% block body %}
-    <h1>Register</h1>
+{% block auth_content %}
+<h1>Inscription</h1>
+<p class="auth-subtitle">Créez votre compte et commencez à créer.</p>
 
-    {{ form_errors(registrationForm) }}
+{{ form_start(registrationForm, {attr: {class: 'auth-form', novalidate: 'novalidate'}}) }}
+    {% if registrationForm.vars.errors|length %}
+        <div class="auth-alert">{{ form_errors(registrationForm) }}</div>
+    {% endif %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+    <div class="auth-field">
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email, {attr: {autocomplete: 'email'}}) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
 
+    <div class="auth-field" data-controller="password-toggle">
+        {{ form_label(registrationForm.plainPassword.first) }}
+        <div class="auth-input-wrap">
+            {{ form_widget(registrationForm.plainPassword.first, {attr: {'data-password-toggle-target': 'input'}}) }}
+            <button type="button" class="auth-eye" data-action="password-toggle#toggle" aria-label="Afficher le mot de passe">
+                <i class="fa-regular fa-eye" data-password-toggle-target="icon"></i>
+            </button>
+        </div>
+        {{ form_errors(registrationForm.plainPassword.first) }}
+    </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <div class="auth-field">
+        {{ form_label(registrationForm.plainPassword.second) }}
+        {{ form_widget(registrationForm.plainPassword.second) }}
+        {{ form_errors(registrationForm.plainPassword.second) }}
+    </div>
+
+    <button type="submit" class="auth-submit">Créer mon compte</button>
+{{ form_end(registrationForm) }}
+
+<p class="auth-switch">Déjà un compte ? <a href="{{ path('app_login') }}" class="auth-link">Se connecter</a></p>
 {% endblock %}

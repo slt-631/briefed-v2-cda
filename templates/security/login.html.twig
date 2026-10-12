@@ -1,28 +1,42 @@
-{% extends 'base.html.twig' %}
+{% extends 'auth/layout.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
-{% block body %}
-<form method="post">
+{% block auth_content %}
+<h1>Connexion</h1>
+<p class="auth-subtitle">Heureux de vous revoir ! Connectez-vous à votre espace.</p>
+
+<form method="post" class="auth-form">
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="auth-alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
+        <div class="auth-alert auth-alert-info">
+            Connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Déconnexion</a>
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <div class="auth-field">
+        <label for="inputEmail">Adresse e-mail</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+    </div>
+
+    <div class="auth-field" data-controller="password-toggle">
+        <label for="inputPassword">Mot de passe</label>
+        <div class="auth-input-wrap">
+            <input type="password" name="password" id="inputPassword" autocomplete="current-password" required data-password-toggle-target="input">
+            <button type="button" class="auth-eye" data-action="password-toggle#toggle" aria-label="Afficher le mot de passe">
+                <i class="fa-regular fa-eye" data-password-toggle-target="icon"></i>
+            </button>
+        </div>
+        <a href="#" class="auth-link auth-forgot">Mot de passe oublié ?</a>
+    </div>
+
     <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+    <button class="auth-submit" type="submit">Se connecter</button>
 </form>
+
+<p class="auth-switch">Nouveau sur la plateforme ? <a href="{{ path('app_register') }}" class="auth-link">Créer un compte</a></p>
 {% endblock %}

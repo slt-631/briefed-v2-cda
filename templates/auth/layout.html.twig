@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="auth">
+    <aside class="auth-hero">
+        <a href="{{ path('app_home') }}" class="auth-hero-logo">
+            <img src="{{ asset('images/logos/logo-blanc 1.png') }}" alt="briefed!">
+        </a>
+        <img class="auth-hero-visual" src="{{ asset('images/auth-visual.png') }}" alt="">
+        <div class="auth-hero-text">
+            <h2>Donnez vie à vos idées les plus marquantes.</h2>
+            <p>La plateforme professionnelle d'édition et de partage de présentations nouvelle génération.</p>
+        </div>
+    </aside>
+
+    <main class="auth-panel">
+        <div class="auth-card">
+            <img class="auth-icon" src="{{ asset('images/logos/icon 1.png') }}" alt="briefed!">
+            {% block auth_content %}{% endblock %}
+        </div>
+    </main>
+</div>
+{% endblock %}
