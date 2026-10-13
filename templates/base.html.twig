@@ -27,6 +27,11 @@
         {% endif %}
     </head>
     <body>
+        {% for label, messages in app.flashes(['success', 'error']) %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}" role="status">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
         {% block body %}
         {% endblock %}
     </body>

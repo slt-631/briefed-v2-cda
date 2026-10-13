@@ -1,0 +1,21 @@
+.flash {
+    max-width: 40rem;
+    margin: 1rem auto;
+    padding: 0.75rem 1rem;
+    border: 1px solid;
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+}
+
+.flash-success {
+    background: var(--color-success-bg);
+    border-color: var(--color-success-border);
+    color: var(--color-success-text);
+}
+
+.flash-error {
+    background: var(--color-error-bg);
+    border-color: var(--color-error-border);
+    color: var(--color-error-text);
+}

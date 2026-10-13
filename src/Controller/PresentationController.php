@@ -57,6 +57,8 @@ class PresentationController extends AbstractController
             $em->persist($presentation);
             $em->flush();
 
+            $this->addFlash('success', 'Votre présentation a été créée.');
+
             return $this->redirectToRoute('app_presentation_index');
         }
 
@@ -83,6 +85,8 @@ class PresentationController extends AbstractController
             $em->persist($presentation->getBackground());
             $em->flush();
 
+            $this->addFlash('success', 'Les modifications ont été enregistrées.');
+
             return $this->redirectToRoute('app_presentation_index');
         }
 
@@ -108,6 +112,10 @@ class PresentationController extends AbstractController
             if ($filename) {
                 $uploader->remove($filename);
             }
+
+            $this->addFlash('success', 'La présentation a été supprimée.');
+        } else {
+            $this->addFlash('error', 'Jeton de sécurité invalide, la présentation n\'a pas été supprimée.');
         }
 
         return $this->redirectToRoute('app_presentation_index');

@@ -8,6 +8,7 @@
 @import "./components/_forms.css";
 @import "./components/_range.css";
 @import "./components/_cards.css";
+@import "./components/_flash.css";
 
 @import "./pages/_editor.css";
 @import "./pages/_dashboard.css";

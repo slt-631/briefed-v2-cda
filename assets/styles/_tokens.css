@@ -18,6 +18,13 @@
 
     --color-border: #e5e7eb;
 
+    --color-success-bg: #ecfdf5;
+    --color-success-border: #a7f3d0;
+    --color-success-text: #065f46;
+    --color-error-bg: #fef2f2;
+    --color-error-border: #fecaca;
+    --color-error-text: #991b1b;
+
     --color-dropzone-bg: color-mix(in srgb, var(--color-primary) 8%, white);
     --color-dropzone-border: color-mix(
         in srgb,
